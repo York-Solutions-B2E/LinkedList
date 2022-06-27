@@ -53,6 +53,26 @@ public class MyLinkedList {
         ++numberOfItems;
     }
 
+    public void showMe() {
+        Box current = theFirstBox;
+
+        while (current != null) {
+            String ptr;
+
+            if (current.theNextBox == null)
+                ptr = "null";
+            else
+                ptr = "->";
+
+            System.out.print("[" + current.value + ", " + ptr + "] ");
+            current = current.theNextBox;
+        }
+    }
+
+    public void remove(int thisSpecificOne) {
+        // do it
+    }
+
     public static void main(String[] args) {
         /*
         [
@@ -68,5 +88,8 @@ public class MyLinkedList {
         myLinkedList.add(6);
         myLinkedList.add(4);
         System.out.println(myLinkedList.size());
+        myLinkedList.showMe(); //[5, ->] [6, ->] [4, null]
+        myLinkedList.remove(5);
+        myLinkedList.showMe(); //[6, ->] [4, null]
     }
 }
