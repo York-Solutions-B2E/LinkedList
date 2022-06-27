@@ -1,8 +1,5 @@
 package net.yorksolutions.datastructures;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-
 // is a data structure
 // a data structure is a thing that stores stuff in a useful way
 // Low cost to insert
@@ -14,6 +11,7 @@ import java.util.LinkedList;
 public class MyLinkedList {
     // keep track of how many items are in this linked list
     private int numberOfItems = 0;
+    private Box theFirstBox = null;
 
     // by convection, data structures in java have a size() method that
     //    returns the number of items in that data structure
@@ -24,18 +22,35 @@ public class MyLinkedList {
     /*
     5, 7, 2, 8
 
-    [5, ->]
+
+    [5, ->] [7, ->] [2, null]
      */
 
     private static class Box {
         int value;
-        Box box = null;
+        Box theNextBox = null; // location of next box, if no box, then null
+
+        Box(int value) {
+            this.value = value;
+        }
     }
 
     public void add(int item) {
+        Box box = new Box(item);
+
+        if (numberOfItems == 0)
+            theFirstBox = box;
+        else {
+            Box theLastBox = theFirstBox;
+
+            while (theLastBox.theNextBox != null) {
+                theLastBox = theLastBox.theNextBox;
+            }
+
+            theLastBox.theNextBox = box;
+        }
+
         ++numberOfItems;
-
-
     }
 
     public static void main(String[] args) {
@@ -49,6 +64,9 @@ public class MyLinkedList {
         ]
          */
         MyLinkedList myLinkedList = new MyLinkedList();
+        myLinkedList.add(5);
+        myLinkedList.add(6);
+        myLinkedList.add(4);
         System.out.println(myLinkedList.size());
     }
 }
