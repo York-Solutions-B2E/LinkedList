@@ -8,10 +8,10 @@ package net.yorksolutions.datastructures;
 // low cost to remove the last piece of data
 // high cost to search
 // low cost to remove an item in the middle
-public class MyLinkedList {
+public class MyLinkedList<T> {
     // keep track of how many items are in this linked list
     private int numberOfItems = 0;
-    private Box theFirstBox = null;
+    private Box<T> theFirstBox = null;
 
     // by convection, data structures in java have a size() method that
     //    returns the number of items in that data structure
@@ -26,22 +26,22 @@ public class MyLinkedList {
     [5, ->] [7, ->] [2, null]
      */
 
-    private static class Box {
-        int value;
-        Box theNextBox = null; // location of next box, if no box, then null
+    private static class Box<T> {
+        T value;
+        Box<T> theNextBox = null; // location of next box, if no box, then null
 
-        Box(int value) {
+        Box(T value) {
             this.value = value;
         }
     }
 
-    public void add(int item) {
-        Box box = new Box(item);
+    public void add(T item) {
+        Box<T> box = new Box<T>(item);
 
         if (numberOfItems == 0)
             theFirstBox = box;
         else {
-            Box theLastBox = theFirstBox;
+            Box<T> theLastBox = theFirstBox;
 
             while (theLastBox.theNextBox != null) {
                 theLastBox = theLastBox.theNextBox;
@@ -53,8 +53,9 @@ public class MyLinkedList {
         ++numberOfItems;
     }
 
-    public void showMe() {
-        Box current = theFirstBox;
+    public String showMe() {
+        String result = "";
+        Box<T> current = theFirstBox;
 
         while (current != null) {
             String ptr;
@@ -64,13 +65,16 @@ public class MyLinkedList {
             else
                 ptr = "->";
 
-            System.out.print("[" + current.value + ", " + ptr + "] ");
+            result += "[" + current.value + ", " + ptr + "] ";
             current = current.theNextBox;
         }
+
+        return result;
     }
 
     public void remove(int thisSpecificOne) {
-        // do it
+        if (numberOfItems > 0)
+            --numberOfItems;
     }
 
     public static void main(String[] args) {
@@ -83,13 +87,13 @@ public class MyLinkedList {
         32000000000 -> 0-255
         ]
          */
-        MyLinkedList myLinkedList = new MyLinkedList();
+        MyLinkedList<Integer> myLinkedList = new MyLinkedList<Integer>();
         myLinkedList.add(5);
         myLinkedList.add(6);
         myLinkedList.add(4);
         System.out.println(myLinkedList.size());
-        myLinkedList.showMe(); //[5, ->] [6, ->] [4, null]
+        System.out.println(myLinkedList.showMe()); //[5, ->] [6, ->] [4, null]
         myLinkedList.remove(5);
-        myLinkedList.showMe(); //[6, ->] [4, null]
+        System.out.println(myLinkedList.showMe()); //[6, ->] [4, null]
     }
 }
